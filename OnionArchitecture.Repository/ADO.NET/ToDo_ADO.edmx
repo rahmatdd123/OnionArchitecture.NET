@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TODOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_M_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_ToDo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskName" Type="varchar" MaxLength="50" />
+          <Property Name="TaskDetails" Type="varchar" MaxLength="250" />
+          <Property Name="TaskDate" Type="date" />
+          <Property Name="TaskStatus" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="USP_DeleteToDo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_GetAllTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="USP_InsertToDo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TaskName" Type="varchar" Mode="In" />
+          <Parameter Name="TaskDetails" Type="varchar" Mode="In" />
+          <Parameter Name="TaskDate" Type="varchar" Mode="In" />
+          <Parameter Name="TaskStatus" Type="int" Mode="In" />
+          <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="USP_UpdateToDo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TaskName" Type="varchar" Mode="In" />
+          <Parameter Name="TaskDetails" Type="varchar" Mode="In" />
+          <Parameter Name="TaskStatus" Type="int" Mode="In" />
+          <Parameter Name="TaskDate" Type="varchar" Mode="In" />
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TODOModelStoreContainer">
+          <EntitySet Name="Tbl_M_Status" EntityType="Self.Tbl_M_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ToDo" EntityType="Self.Tbl_ToDo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TODOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tbl_ToDo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaskDetails" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TaskDate" Type="DateTime" Precision="0" />
+          <Property Name="TaskStatus" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="TODOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_ToDo" EntityType="Self.Tbl_ToDo" />
+          <FunctionImport Name="USP_DeleteToDo">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="USP_GetAllTask" ReturnType="Collection(TODOModel.USP_GetAllTask_Result)" />
+          <FunctionImport Name="USP_InsertToDo">
+            <Parameter Name="TaskName" Mode="In" Type="String" />
+            <Parameter Name="TaskDetails" Mode="In" Type="String" />
+            <Parameter Name="TaskDate" Mode="In" Type="String" />
+            <Parameter Name="TaskStatus" Mode="In" Type="Int32" />
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_UpdateToDo">
+            <Parameter Name="TaskName" Mode="In" Type="String" />
+            <Parameter Name="TaskDetails" Mode="In" Type="String" />
+            <Parameter Name="TaskStatus" Mode="In" Type="Int32" />
+            <Parameter Name="TaskDate" Mode="In" Type="String" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Tbl_M_Status" EntityType="TODOModel.Tbl_M_Status" />
+        </EntityContainer>
+        <ComplexType Name="USP_GetAllTask_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="TaskName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TaskDetails" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="TaskDate" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="TaskStatus" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="7" />
+        </ComplexType>
+        <EntityType Name="Tbl_M_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TODOModelStoreContainer" CdmEntityContainer="TODOEntities">
+          <EntitySetMapping Name="Tbl_ToDo">
+            <EntityTypeMapping TypeName="TODOModel.Tbl_ToDo">
+              <MappingFragment StoreEntitySet="Tbl_ToDo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskDetails" ColumnName="TaskDetails" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="USP_DeleteToDo" FunctionName="TODOModel.Store.USP_DeleteToDo" />
+          <FunctionImportMapping FunctionImportName="USP_GetAllTask" FunctionName="TODOModel.Store.USP_GetAllTask">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TODOModel.USP_GetAllTask_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskDetails" ColumnName="TaskDetails" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_InsertToDo" FunctionName="TODOModel.Store.USP_InsertToDo" />
+          <FunctionImportMapping FunctionImportName="USP_UpdateToDo" FunctionName="TODOModel.Store.USP_UpdateToDo" />
+          <EntitySetMapping Name="Tbl_M_Status">
+            <EntityTypeMapping TypeName="TODOModel.Tbl_M_Status">
+              <MappingFragment StoreEntitySet="Tbl_M_Status">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model OnionArchitecture.Models.ToDo_VM
+<h2>To Do</h2>
+
+<div ng-app="todoApp">
+    <div id="MainWrap" ng-controller="ToDoController">
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Add ToDo
+                    </div>
+                    @using (Html.BeginForm("AddMaterial", "ToDo", FormMethod.Post, new { onsubmit = "return addToDo(this)" }))
+                    {
+                        <div class="panel-body" style="height:350px!important">
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    Task Name
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.TaskName, new { htmlAttributes = new { @class = "form-control", @id = "txtTaskName", @placeholder = "Task Name" } })
+                                    @Html.ValidationMessageFor(model => model.TaskName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    Task Details
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.TaskDetails, new { htmlAttributes = new { @class = "form-control", @id = "txtTaskDetails", @placeholder = "Task Details" } })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    Task Details
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.TaskDate, new { htmlAttributes = new { @class = "form-control", @id = "txtTaskDate", @placeholder = "Task Date" } })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    Task Status
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(x => Model.TaskStatusID, new SelectList(Model.ListStatus, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "txtTaskStatusID" })
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn-primary pull-right form-control" value="Submit" />
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        To Do - List
+                    </div>
+                    <div class="panel-body" style="height:405px!important; overflow-y:scroll;">
+                        <div>
+                            <div ng-repeat="x in task" class="alert alert-info" role="alert">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Task Name : {{x.TaskName}}
+                                        <br>
+                                        Task Detail : {{x.TaskDetails}}
+                                        <br>
+                                        Task Date : {{x.TaskDate}}
+                                        <br>
+                                        Task Status : {{x.Status}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="pull-right">
+                                            <button class="btn btn-primary" ng-click="editTask(x);" style="width:80px;">Edit</button>
+                                            <br />
+                                            <button class="btn btn-danger" ng-click="deleteTask(x.Id);" style="margin-top:5px; width:80px;">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js" integrity="sha256-23hi0Ag650tclABdGCdMNSjxvikytyQ44vYGo9HyOrU=" crossorigin="anonymous"></script>
+
+<script>
+    var todoApp = angular.module("todoApp", [])
+
+    todoApp.controller('ToDoController', function ($scope, $http, $window, $timeout, $interval) {
+        $scope.task;
+        $scope.formData = {};
+        $scope.alert = alert;
+        $scope.getTodo = function () {
+            $http({
+                method: 'GET',
+                url: '../ToDo/GetAllTask'
+            }).then(function (response) {
+                //console.log(response.data.data)
+                $scope.task = response.data.data;
+            });
+        }
+        $scope.getTodo();
+
+        //getTodo()
+    });
+
+
+    function addToDo(form) {
+
+        $.validator.unobtrusive.parse(form);
+        if ($(form).valid()) {
+            $.ajax({
+                type: "POST",
+                url: form.action,
+                data: $(form).serialize(),
+                success: function (data) {
+                    alert(data)
+                    $(form).trigger("reset");
+                    var scope = angular.element(document.getElementById("MainWrap")).scope();
+                    scope.$apply(function () {
+                        scope.getTodo();
+                    });
+                }
+            })
+        }
+        return false;
+    }
+</script>

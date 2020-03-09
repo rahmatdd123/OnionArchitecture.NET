@@ -55,23 +55,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ADO.NET\Tbl_User.cs">
-      <DependentUpon>TestTable.tt</DependentUpon>
+    <Compile Include="ADO.NET\Tbl_M_Status.cs">
+      <DependentUpon>ToDo_ADO.tt</DependentUpon>
     </Compile>
-    <Compile Include="ADO.NET\TestTable.Context.cs">
+    <Compile Include="ADO.NET\Tbl_ToDo.cs">
+      <DependentUpon>ToDo_ADO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ADO.NET\ToDo_ADO.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestTable.Context.tt</DependentUpon>
+      <DependentUpon>ToDo_ADO.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ADO.NET\TestTable.cs">
+    <Compile Include="ADO.NET\ToDo_ADO.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestTable.tt</DependentUpon>
+      <DependentUpon>ToDo_ADO.tt</DependentUpon>
     </Compile>
-    <Compile Include="ADO.NET\TestTable.Designer.cs">
+    <Compile Include="ADO.NET\ToDo_ADO.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestTable.edmx</DependentUpon>
+      <DependentUpon>ToDo_ADO.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ADO.NET\USP_GetAllTask_Result.cs">
+      <DependentUpon>ToDo_ADO.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DatabaseFactory.cs" />
@@ -89,22 +95,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ADO.NET\TestTable.edmx">
+    <EntityDeploy Include="ADO.NET\ToDo_ADO.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TestTable.Designer.cs</LastGenOutput>
+      <LastGenOutput>ToDo_ADO.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ADO.NET\TestTable.Context.tt">
+    <None Include="ADO.NET\ToDo_ADO.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestTable.edmx</DependentUpon>
-      <LastGenOutput>TestTable.Context.cs</LastGenOutput>
+      <DependentUpon>ToDo_ADO.edmx</DependentUpon>
+      <LastGenOutput>ToDo_ADO.Context.cs</LastGenOutput>
     </None>
-    <None Include="ADO.NET\TestTable.edmx.diagram">
-      <DependentUpon>TestTable.edmx</DependentUpon>
+    <None Include="ADO.NET\ToDo_ADO.edmx.diagram">
+      <DependentUpon>ToDo_ADO.edmx</DependentUpon>
     </None>
-    <None Include="ADO.NET\TestTable.tt">
+    <None Include="ADO.NET\ToDo_ADO.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestTable.edmx</DependentUpon>
-      <LastGenOutput>TestTable.cs</LastGenOutput>
+      <DependentUpon>ToDo_ADO.edmx</DependentUpon>
+      <LastGenOutput>ToDo_ADO.cs</LastGenOutput>
     </None>
     <None Include="App.Config" />
     <None Include="packages.config" />

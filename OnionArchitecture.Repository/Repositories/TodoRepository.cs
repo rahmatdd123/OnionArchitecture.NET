@@ -1,5 +1,6 @@
 ﻿using OnionArchitecture.Core.Interfaces.DomainServices.Repositories;
 using OnionArchitecture.Core.Models;
+using OnionArchitecture.Repository.ADO.NET;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -39,6 +40,14 @@ namespace OnionArchitecture.Repository.Repositories
                     return MappingTodoList(reader).ToList();
                 }
             }
+            //var test = from abc in db.Tbl_User
+            //           select new Todo
+            //           {
+            //               Id = abc.Id,
+            //               TaskName = abc.UserName
+            //           };
+            //return test.ToList();
+
         }
         private IEnumerable<Todo> MappingTodoList(IDataReader reader)
         {

@@ -12,11 +12,15 @@ namespace OnionArchitecture.Repository.ADO.NET
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_User
+    public partial class Tbl_ToDo
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public string TaskName { get; set; }
+        public string TaskDetails { get; set; }
+        public Nullable<System.DateTime> TaskDate { get; set; }
+        public Nullable<int> TaskStatus { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

@@ -6,13 +6,15 @@ using System.Web;
 using System.Web.Mvc;
 using OnionArchitecture.Core.Models;
 using OnionArchitecture.Repository.ADO.NET;
+using System.Diagnostics;
 
 namespace OnionArchitecture.Controllers
 {
     public class HomeController : Controller
     {
-        private TestDBEntities db = new TestDBEntities();
         ITodoService todoService;
+        private TODOEntities db = new TODOEntities();
+
         public HomeController(ITodoService _todoService)
         {
             this.todoService = _todoService;
@@ -21,13 +23,29 @@ namespace OnionArchitecture.Controllers
         public ActionResult Index()
         {
             //select
-            var test = from abc in db.Tbl_User
+            var timer = new Stopwatch();
+            timer.Start();
+
+
+
+            var test = from abc in db.Tbl_ToDo
                        select new Todo
                        {
                            Id = abc.Id,
-                           TaskName = abc.UserName
+                           TaskName = abc.TaskName
                        };
             var test1 = test.ToList();
+
+            timer.Stop();
+            var coba1 = db.Tbl_ToDo.ToList();
+
+
+            var testSP = db.USP_GetAllTask().ToList();
+
+            var timer1 = new Stopwatch();
+            timer1.Start();
+            var get = todoService.GetTodos();
+            timer1.Stop();
 
             ////insert
             //Tbl_User user = new Tbl_User();
